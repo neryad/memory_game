@@ -34,7 +34,9 @@ class HomePage extends StatelessWidget {
                 const Image(image: AssetImage('assets/images/Memories.png')),
                 const SizedBox(height: 20),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'game');
+                  },
                   child: const Text('Fácil',
                       style: TextStyle(
                           color: utils.whiteColor,
@@ -43,7 +45,9 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'game');
+                    },
                     child: const Text(
                       'Medio',
                       style: TextStyle(
@@ -53,7 +57,9 @@ class HomePage extends StatelessWidget {
                     )),
                 const SizedBox(height: 20),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'game');
+                    },
                     child: const Text('Difícil',
                         style: TextStyle(
                             color: utils.whiteColor,

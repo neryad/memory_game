@@ -1,18 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:memory_game/shared/utils.dart' as utils;
+class GameLogic {
+  final String hiddenCard = 'assets/images/box.png';
+  List<String>? cardsImg;
+  final int cardCount = 12;
 
-class GameLogic extends StatefulWidget {
-  GameLogic({Key? key}) : super(key: key);
-
-  @override
-  State<GameLogic> createState() => _GameLogicState();
-}
-
-class _GameLogicState extends State<GameLogic> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: utils.redColor,
-    );
+  void initGame() {
+    cardsImg = List<String>.generate(cardCount, (index) {
+      return hiddenCard;
+    });
   }
 }

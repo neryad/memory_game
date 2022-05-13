@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'game/game_logic.dart';
+import 'game/game.dart';
 import 'home/home_page.dart';
 import 'info/info_page.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       routes: {
         'home': (context) => HomePage(),
-        'game': (context) => GameLogic(),
+        'game': (context) => Game(),
         'info': (context) => InfoPage(),
       },
     );
