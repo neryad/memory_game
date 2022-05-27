@@ -35,7 +35,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'game');
+                    Navigator.pushNamed(context, 'game',
+                        arguments: {'level': 'easy'});
                   },
                   child: const Text('Fácil',
                       style: TextStyle(
@@ -46,7 +47,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'game');
+                      Navigator.pushNamed(context, 'game',
+                          arguments: {'level': 'medium'});
                     },
                     child: const Text(
                       'Medio',
@@ -58,7 +60,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'game');
+                      Navigator.pushNamed(context, 'game',
+                          arguments: {'level': 'hard'});
                     },
                     child: const Text('Difícil',
                         style: TextStyle(

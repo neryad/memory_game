@@ -1,7 +1,11 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:memory_game/game/game_logic.dart';
 import 'package:memory_game/game/widgets/board.dart';
 import 'package:memory_game/shared/utils.dart' as utils;
+import 'package:memory_game/game/widgets/dialoag.dart';
 
 class Game extends StatefulWidget {
   Game({Key? key}) : super(key: key);
@@ -12,15 +16,53 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
   final GameLogic _game = GameLogic();
+
+  var levelForCardCount = 0;
+  var tries = 0;
+  var score = 0;
+  var axisNumber = 4;
+  late Timer timer;
+  int startTime = 60;
+
+  void startTimer(BuildContext context) {
+    if (startTime == 0) {}
+    const oneSecond = Duration(seconds: 1);
+    timer = Timer.periodic(oneSecond, (timer) {
+      if (startTime == 0) {
+        timer.cancel();
+        _showDialog(context, 'Game Over', 'Tu puntuación fue de: $score');
+      } else {
+        setState(() {
+          startTime--;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _game.initGame();
+    // _game.initGame();
+    startTimer(context);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    String level = arguments['level'] as String;
+    //_game.initGame(levelForCardCount);
+    if (level == 'medium') {
+      levelForCardCount = 24;
+    }
+    if (level == 'easy' || level == 'medium') {
+      _game.cardCount = 18;
+      print(_game.cardCount);
+      axisNumber = 4;
+    } else {
+      axisNumber = 6;
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: utils.redColor,
@@ -31,9 +73,9 @@ class _GameState extends State<Game> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            board('Time', '00:30'),
-            board('Score', '100'),
-            board('Moves', '30')
+            board('Time', '$startTime'),
+            board('Score', '$score'),
+            board('Moves', '$tries')
           ],
         ),
         SizedBox(
@@ -41,9 +83,9 @@ class _GameState extends State<Game> {
           width: screenWidth,
           child: GridView.builder(
               itemCount: _game.cardsImg!.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 //TODO: Change the number of cross axis
-                crossAxisCount: 4,
+                crossAxisCount: axisNumber,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
@@ -51,7 +93,37 @@ class _GameState extends State<Game> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
-                      print('hola');
+                      setState(() {
+                        tries++;
+
+                        _game.cardsImg![index] = _game.demo_card_list[index];
+
+                        _game.matchCheck
+                            .add({index: _game.demo_card_list[index]});
+                        if (_game.matchCheck.length == 2) {
+                          if (_game.matchCheck[0].values.first ==
+                              _game.matchCheck[1].values.first) {
+                            score += 100;
+
+                            _game.matchCheck.clear();
+                          } else {
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () {
+                              // print(_game.cardsImg);
+                              setState(() {
+                                _game.cardsImg![_game.matchCheck[0].keys
+                                    .first] = _game.hiddenCard;
+                                _game.cardsImg![_game.matchCheck[1].keys
+                                    .first] = _game.hiddenCard;
+
+                                _game.matchCheck.clear();
+                              });
+                            });
+                          }
+                        }
+                      });
+
+                      // _game.matchCheck
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -65,5 +137,25 @@ class _GameState extends State<Game> {
         ),
       ]),
     );
+  }
+
+  void _showDialog(BuildContext context, String title, String info) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(info),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ir a inicio'),
+                onPressed: () {
+                  // Navigator.of(context).pop();
+                  Navigator.pushNamed(context, 'home');
+                },
+              )
+            ],
+          );
+        });
   }
 }
