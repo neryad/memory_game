@@ -1,16 +1,15 @@
-# memory_game
+# Memories
 
-A new Flutter project.
+##  App Monthly Challenge 2022 | mes mayo
 
-## Getting Started
+El reto de este mes era hacer un app o mas bien juego de memoria, el mismo tendria 3 niveles de dificultad, contador de movidad y tiempo para completar.
 
-This project is a starting point for a Flutter application.
+# links de las apk :
+* [Memories APK](https://mega.nz/folder/Z4NkCI5b#H6wZJh1X8c1w7fbt_woYGQ)
 
-A few resources to get you started if this is your first Flutter project:
+ ## Video demostrativo
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/20806101/170891969-edfbad74-3c13-449a-9cfe-9005e8c6b3cc.gif)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## License
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+MIT
